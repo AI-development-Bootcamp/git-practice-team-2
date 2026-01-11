@@ -27,10 +27,10 @@
 - [x] **Modal**: Update submit handler to include priority in todo creation.
 - [x] **Service**: Update API service to pass `priority` field in Create calls.
 
-### Phase 3: Display Priority in Todo List
-- [ ] **Component**: Create `PriorityBadge` component with color coding (high=red, medium=yellow, low=green).
-- [ ] **UI**: Add `PriorityBadge` to `TodoItem` component.
-- [ ] **UI**: Add background color or border color to `TodoItem` based on priority.
+### Phase 3: Display Priority in Todo List ✅ COMPLETED
+- [x] **Component**: Create `PriorityBadge` component with color coding (high=red, medium=yellow, low=green).
+- [x] **UI**: Add `PriorityBadge` to `TodoItem` component.
+- [x] **UI**: Add ability to change priority by clicking the badge (dropdown menu).
 
 ### Phase 4: Sort Todos by Priority
 - [ ] **Logic**: Implement sorting function to order todos by priority (high → medium → low).
