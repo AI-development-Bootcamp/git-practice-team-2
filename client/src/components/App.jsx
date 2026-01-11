@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import TodoList from './TodoList';
-import AddTodo from './AddTodo';
+import AddTodoModal from './AddTodoModal';
 import '../App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     loadTodos();
@@ -62,7 +63,18 @@ function App() {
       </header>
 
       <main className="main">
-        <AddTodo onAdd={handleAdd} />
+        <button
+          className="add-todo-btn"
+          onClick={() => setIsModalOpen(true)}
+        >
+          + Add New Task
+        </button>
+
+        <AddTodoModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onAdd={handleAdd}
+        />
 
         {error && (
           <div className="error-message">
