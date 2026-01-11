@@ -56,6 +56,15 @@ function App() {
     }
   };
 
+  const handlePriorityChange = async (id, priority) => {
+    try {
+      const updated = await api.todos.update(id, { priority });
+      setTodos(todos.map(t => t.id === id ? updated : t));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="app">
       <header className="header">
@@ -90,6 +99,7 @@ function App() {
             todos={todos}
             onToggle={handleToggle}
             onDelete={handleDelete}
+            onPriorityChange={handlePriorityChange}
           />
         )}
       </main>
