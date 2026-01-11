@@ -19,13 +19,13 @@
 - [x] **UI**: Replace `AddTodo` inline form with a button to trigger modal.
 - [x] **UI**: Integrate modal into App component.
 
-### Phase 2: Add Priority Feature to Modal
-- [ ] **Types**: Update client-side `Todo` interface with `priority: 'low' | 'medium' | 'high'`.
-- [ ] **Component**: Create `PrioritySelector` component (select/dropdown with low, medium, high options).
-- [ ] **Component**: Set default priority value to 'medium' in `PrioritySelector`.
-- [ ] **Modal**: Add `PrioritySelector` to `AddTodoModal` form.
-- [ ] **Modal**: Update submit handler to include priority in todo creation.
-- [ ] **Service**: Update API service to pass `priority` field in Create calls.
+### Phase 2: Add Priority Feature to Modal ✅ COMPLETED
+- [x] **Types**: Update client-side `Todo` interface with `priority: 'low' | 'medium' | 'high'`.
+- [x] **Component**: Create `PrioritySelector` component (select/dropdown with low, medium, high options).
+- [x] **Component**: Set default priority value to 'medium' in `PrioritySelector`.
+- [x] **Modal**: Add `PrioritySelector` to `AddTodoModal` form.
+- [x] **Modal**: Update submit handler to include priority in todo creation.
+- [x] **Service**: Update API service to pass `priority` field in Create calls.
 
 ### Phase 3: Display Priority in Todo List
 - [ ] **Component**: Create `PriorityBadge` component with color coding (high=red, medium=yellow, low=green).

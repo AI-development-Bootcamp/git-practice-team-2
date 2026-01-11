@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import PrioritySelector from './PrioritySelector';
 import './AddTodoModal.css';
 
 function AddTodoModal({ isOpen, onClose, onAdd }) {
   const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState('medium');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
-      onAdd(title.trim());
+      onAdd({ title: title.trim(), priority });
       setTitle('');
+      setPriority('medium');
       onClose();
     }
   };
@@ -44,6 +47,8 @@ function AddTodoModal({ isOpen, onClose, onAdd }) {
               autoFocus
             />
           </div>
+
+          <PrioritySelector value={priority} onChange={setPriority} />
 
           <div className="modal-actions">
             <button
