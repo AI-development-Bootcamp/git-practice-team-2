@@ -70,7 +70,7 @@ todo-workshop/
 {
   "id": "uuid",
   "title": "Task title",
-  "status": "todo | done",
+  "status": "todo | done | in_progress | review ",
   "createdAt": "ISO date",
   "updatedAt": "ISO date"
 }
