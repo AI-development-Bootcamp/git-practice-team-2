@@ -1,11 +1,11 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { status_options as statuses } from '../constants/status.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const DATA_FILE = join(__dirname, '../data/todos.json');
-const STATUS_FILE = join(__dirname, '../data/status.json');
 
 function readTodos() {
   try {
@@ -16,27 +16,16 @@ function readTodos() {
   }
 }
 
-function readStatuses() {
-  try {
-    const data = readFileSync(STATUS_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    // Fallback if file missing
-    return ['todo', 'done', 'in_progress', 'review'];
-  }
-}
-
 function validateStatus(status) {
   if (!status) return 'todo'; // Default
 
-  const validStatuses = readStatuses();
   const normalizedStatus = status.toLowerCase();
 
-  if (validStatuses.includes(normalizedStatus)) {
+  if (statuses.includes(normalizedStatus)) {
     return normalizedStatus;
   }
 
-  const error = new Error(`Invalid status: ${status}. Allowed values: ${validStatuses.join(', ')}`);
+  const error = new Error(`Invalid status: ${status}. Allowed values: ${statuses.join(', ')}`);
   error.statusCode = 400;
   throw error;
 }
