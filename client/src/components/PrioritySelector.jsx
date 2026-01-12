@@ -1,5 +1,5 @@
 import React from 'react';
-import './PrioritySelector.css';
+import '../styles/PrioritySelector.css';
 import { PRIORITY_COLORS } from '../constants/priorities';
 
 function PrioritySelector({ value = 'medium', onChange }) {

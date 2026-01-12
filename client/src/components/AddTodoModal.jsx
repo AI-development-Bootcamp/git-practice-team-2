@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import PrioritySelector from './PrioritySelector';
-import './AddTodoModal.css';
+import React, { useState } from "react";
+import PrioritySelector from "./PrioritySelector";
+import "../styles/AddTodoModal.css";
 
 function AddTodoModal({ isOpen, onClose, onAdd }) {
-  const [title, setTitle] = useState('');
-  const [priority, setPriority] = useState('medium');
+  const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState("medium");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
       onAdd({ title: title.trim(), priority });
-      setTitle('');
-      setPriority('medium');
+      setTitle("");
+      setPriority("medium");
       onClose();
     }
   };
 
   const handleBackdropClick = (e) => {
-    if (e.target.className === 'modal-backdrop') {
+    if (e.target.className === "modal-backdrop") {
       onClose();
     }
   };
@@ -51,11 +51,7 @@ function AddTodoModal({ isOpen, onClose, onAdd }) {
           <PrioritySelector value={priority} onChange={setPriority} />
 
           <div className="modal-actions">
-            <button
-              type="button"
-              className="btn-cancel"
-              onClick={onClose}
-            >
+            <button type="button" className="btn-cancel" onClick={onClose}>
               Cancel
             </button>
             <button

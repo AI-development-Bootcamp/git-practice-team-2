@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './PriorityBadge.css';
+import '../styles/PriorityBadge.css';
 import { PRIORITY_COLORS } from '../constants/priorities';
 
 function PriorityBadge({ priority, onChange }) {

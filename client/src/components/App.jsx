@@ -5,7 +5,7 @@ import AddTodo from "./AddTodo";
 import Navigation from "./Navigation";
 import StatisticsPage from "./StatisticsPage";
 import AddTodoModal from "./AddTodoModal";
-import "../App.css";
+import "../styles/App.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
