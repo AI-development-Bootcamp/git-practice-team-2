@@ -2,7 +2,7 @@ import React from 'react';
 import TodoItem from './TodoItem';
 import { STATUSES, STATUS_CONFIG, validateStatus } from '../constants/statuses';
 
-function TodoList({ todos, onStatusChange, onDelete }) {
+function TodoList({ todos, onStatusChange, onDelete, onPriorityChange }) {
   if (todos.length === 0) {
     return (
       <div className="empty-state">
@@ -29,6 +29,7 @@ function TodoList({ todos, onStatusChange, onDelete }) {
 
   return (
     <div className="todo-list">
+
       {statusOrder.map(status => {
         const statusTodos = todosByStatus[status];
         if (statusTodos.length === 0) return null;
@@ -44,6 +45,7 @@ function TodoList({ todos, onStatusChange, onDelete }) {
                 todo={todo}
                 onStatusChange={onStatusChange}
                 onDelete={onDelete}
+                onPriorityChange={onPriorityChange}
               />
             ))}
           </section>
