@@ -5,7 +5,6 @@ import { dirname, join } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const DATA_FILE = join(__dirname, "../data/todos.json");
-
 function readTodos() {
   try {
     const data = readFileSync(DATA_FILE, "utf-8");
@@ -14,7 +13,7 @@ function readTodos() {
     return [];
   }
 }
-
+//check
 function writeTodos(todos) {
   writeFileSync(DATA_FILE, JSON.stringify(todos, null, 2));
 }
