@@ -7,10 +7,12 @@ function PriorityBadge({ priority, onChange }) {
   const dropdownRef = useRef(null);
 
   const priorities = [
-    { value: 'high', color: PRIORITY_COLORS.HIGH, label: 'High' },
-    { value: 'medium', color: PRIORITY_COLORS.MEDIUM, label: 'Medium' },
-    { value: 'low', color: PRIORITY_COLORS.LOW, label: 'Low' }
+    { value: 'high', color: PRIORITY_COLORS.HIGH },
+    { value: 'medium', color: PRIORITY_COLORS.MEDIUM },
+    { value: 'low', color: PRIORITY_COLORS.LOW }
   ];
+
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   const currentPriority = priorities.find(p => p.value === priority) || priorities[1];
 
@@ -41,7 +43,7 @@ function PriorityBadge({ priority, onChange }) {
         className="priority-badge"
         style={{ backgroundColor: currentPriority.color }}
         onClick={() => setIsOpen(!isOpen)}
-        title={`Priority: ${currentPriority.label} (click to change)`}
+        title={`Priority: ${capitalize(currentPriority.value)} (click to change)`}
       />
 
       {isOpen && (
@@ -56,7 +58,7 @@ function PriorityBadge({ priority, onChange }) {
                 className="priority-option-badge"
                 style={{ backgroundColor: p.color }}
               />
-              <span className="priority-option-label">{p.label}</span>
+              <span className="priority-option-label">{capitalize(p.value)}</span>
             </button>
           ))}
         </div>
