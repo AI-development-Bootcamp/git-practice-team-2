@@ -1,11 +1,12 @@
 import React from 'react';
 import './PrioritySelector.css';
+import { PRIORITY_COLORS } from '../constants/priorities';
 
 function PrioritySelector({ value = 'medium', onChange }) {
   const priorities = [
-    { value: 'high', color: '#ef4444' },
-    { value: 'medium', color: '#f59e0b' },
-    { value: 'low', color: '#10b981' }
+    { value: 'high', color: PRIORITY_COLORS.HIGH },
+    { value: 'medium', color: PRIORITY_COLORS.MEDIUM },
+    { value: 'low', color: PRIORITY_COLORS.LOW }
   ];
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);

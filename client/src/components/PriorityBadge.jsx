@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './PriorityBadge.css';
+import { PRIORITY_COLORS } from '../constants/priorities';
 
 function PriorityBadge({ priority, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const priorities = [
-    { value: 'high', color: '#ef4444', label: 'High' },
-    { value: 'medium', color: '#f59e0b', label: 'Medium' },
-    { value: 'low', color: '#10b981', label: 'Low' }
+    { value: 'high', color: PRIORITY_COLORS.HIGH, label: 'High' },
+    { value: 'medium', color: PRIORITY_COLORS.MEDIUM, label: 'Medium' },
+    { value: 'low', color: PRIORITY_COLORS.LOW, label: 'Low' }
   ];
 
   const currentPriority = priorities.find(p => p.value === priority) || priorities[1];
