@@ -4,10 +4,17 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
   },
   "dependencies": {
-    "fastify": "^4.24.0",
-    "@fastify/cors": "^8.4.0"
+    "@fastify/cors": "^8.4.0",
+    "fastify": "^4.24.0"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^4.0.16",
+    "vitest": "^4.0.16"
   }
 }
