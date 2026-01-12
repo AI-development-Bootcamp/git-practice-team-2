@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PriorityBadge from './PriorityBadge';
 import { STATUSES, VALID_STATUSES, STATUS_CONFIG } from '../constants/statuses';
 
-function TodoItem({ todo, onStatusChange, onDelete }) {
+function TodoItem({ todo, onStatusChange, onDelete,onPriorityChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -37,7 +38,23 @@ function TodoItem({ todo, onStatusChange, onDelete }) {
   };
 
   return (
-    <div className={`todo-item todo-item-${currentStatus}`}>
+    <div
+      className={`todo-item todo-item-${currentStatus}`}
+      data-priority={todo.priority || 'medium'}
+    >
+      <button
+        className="toggle-btn"
+        onClick={() => onToggle(todo.id)}
+        aria-label={todo.status === 'done' ? 'Mark as pending' : 'Mark as done'}
+      >
+        {todo.status === 'done' ? '✓' : '○'}
+      </button>
+
+      <PriorityBadge
+        priority={todo.priority || 'medium'}
+        onChange={(newPriority) => onPriorityChange(todo.id, newPriority)}
+      />
+
       <span className="todo-title">{todo.title}</span>
 
       <div className="status-dropdown" ref={dropdownRef}>
