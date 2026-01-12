@@ -1,4 +1,4 @@
-import { todoService } from './todoService.js';
+import { todoService } from '../services/todoService.js';
 
 console.log('--- Starting Manual Test for Todo Priority (Service Level) ---');
 

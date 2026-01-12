@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import todosRoutes from './todos.js';
+import todosRoutes from '../routes/todos.js';
 import { todoService } from '../services/todoService.js';
 
 async function runTests() {
