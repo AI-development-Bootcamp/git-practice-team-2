@@ -37,4 +37,8 @@ export const api = {
       method: 'DELETE',
     }),
   },
+
+  statistics: {
+    getAll: () => fetchApi('/todos/statistics'),
+  },
 };
