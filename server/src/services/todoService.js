@@ -35,6 +35,7 @@ export const todoService = {
       id: crypto.randomUUID(),
       title: todoData.title,
       status: 'todo',
+      priority: todoData.priority || 'medium',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -50,7 +51,7 @@ export const todoService = {
 
     todos[index] = {
       ...todos[index],
-      ...updates,
+      ...updates, // Supported fields: title, status, priority
       updatedAt: new Date().toISOString()
     };
     writeTodos(todos);
