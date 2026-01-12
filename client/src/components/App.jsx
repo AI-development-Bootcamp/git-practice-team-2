@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { api } from '../services/api';
-import TodoList from './TodoList';
-import AddTodo from './AddTodo';
-import Navigation from './Navigation';
-import StatisticsPage from './StatisticsPage';
-import AddTodoModal from './AddTodoModal';
-import '../App.css';
+import React, { useState, useEffect } from "react";
+import { api } from "../services/api";
+import TodoList from "./TodoList";
+import AddTodo from "./AddTodo";
+import Navigation from "./Navigation";
+import StatisticsPage from "./StatisticsPage";
+import AddTodoModal from "./AddTodoModal";
+import "../App.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState('tasks');
+  const [currentPage, setCurrentPage] = useState("tasks");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -42,10 +42,10 @@ function App() {
 
   const handleToggle = async (id) => {
     try {
-      const todo = todos.find(t => t.id === id);
-      const newStatus = todo.status === 'done' ? 'todo' : 'done';
+      const todo = todos.find((t) => t.id === id);
+      const newStatus = todo.status === "done" ? "todo" : "done";
       const updated = await api.todos.update(id, { status: newStatus });
-      setTodos(todos.map(t => t.id === id ? updated : t));
+      setTodos(todos.map((t) => (t.id === id ? updated : t)));
     } catch (err) {
       setError(err.message);
     }
@@ -54,7 +54,7 @@ function App() {
   const handleDelete = async (id) => {
     try {
       await api.todos.delete(id);
-      setTodos(todos.filter(t => t.id !== id));
+      setTodos(todos.filter((t) => t.id !== id));
     } catch (err) {
       setError(err.message);
     }
@@ -67,7 +67,7 @@ function App() {
   const handlePriorityChange = async (id, priority) => {
     try {
       const updated = await api.todos.update(id, { priority });
-      setTodos(todos.map(t => t.id === id ? updated : t));
+      setTodos(todos.map((t) => (t.id === id ? updated : t)));
     } catch (err) {
       setError(err.message);
     }
@@ -83,22 +83,20 @@ function App() {
         <Navigation currentPage={currentPage} onPageChange={handlePageChange} />
 
         <main className="main">
-          {currentPage === 'tasks' ? (
+          {currentPage === "tasks" ? (
             <>
-              <AddTodo onAdd={handleAdd} />
-      <main className="main">
-        <button
-          className="add-todo-btn"
-          onClick={() => setIsModalOpen(true)}
-        >
-          + Add New Task
-        </button>
+              <button
+                className="add-todo-btn"
+                onClick={() => setIsModalOpen(true)}
+              >
+                + Add New Task
+              </button>
 
-        <AddTodoModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onAdd={handleAdd}
-        />
+              <AddTodoModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onAdd={handleAdd}
+              />
 
               {error && (
                 <div className="error-message">
@@ -114,6 +112,7 @@ function App() {
                   todos={todos}
                   onToggle={handleToggle}
                   onDelete={handleDelete}
+                  onPriorityChange={handlePriorityChange}
                 />
               )}
             </>
@@ -122,17 +121,6 @@ function App() {
           )}
         </main>
       </div>
-        {loading ? (
-          <div className="loading">Loading...</div>
-        ) : (
-          <TodoList
-            todos={todos}
-            onToggle={handleToggle}
-            onDelete={handleDelete}
-            onPriorityChange={handlePriorityChange}
-          />
-        )}
-      </main>
     </div>
   );
 }
