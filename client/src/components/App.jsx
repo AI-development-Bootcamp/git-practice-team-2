@@ -40,10 +40,8 @@ function App() {
     }
   };
 
-  const handleToggle = async (id) => {
+  const handleStatusChange = async (id, newStatus) => {
     try {
-      const todo = todos.find((t) => t.id === id);
-      const newStatus = todo.status === "done" ? "todo" : "done";
       const updated = await api.todos.update(id, { status: newStatus });
       setTodos(todos.map((t) => (t.id === id ? updated : t)));
     } catch (err) {
@@ -110,7 +108,7 @@ function App() {
               ) : (
                 <TodoList
                   todos={todos}
-                  onToggle={handleToggle}
+                  onStatusChange={handleStatusChange}
                   onDelete={handleDelete}
                   onPriorityChange={handlePriorityChange}
                 />

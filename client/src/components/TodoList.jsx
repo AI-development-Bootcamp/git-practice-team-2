@@ -1,7 +1,8 @@
 import React from 'react';
 import TodoItem from './TodoItem';
+import { STATUSES, STATUS_CONFIG, validateStatus } from '../constants/statuses';
 
-function TodoList({ todos, onToggle, onDelete, onPriorityChange }) {
+function TodoList({ todos, onStatusChange, onDelete, onPriorityChange }) {
   if (todos.length === 0) {
     return (
       <div className="empty-state">
@@ -10,40 +11,46 @@ function TodoList({ todos, onToggle, onDelete, onPriorityChange }) {
     );
   }
 
-  const pendingTodos = todos.filter(t => t.status === 'todo');
-  const doneTodos = todos.filter(t => t.status === 'done');
+  // Group todos by status
+  const todosByStatus = {
+    [STATUSES.TODO]: [],
+    [STATUSES.IN_PROGRESS]: [],
+    [STATUSES.REVIEW]: [],
+    [STATUSES.DONE]: []
+  };
+
+  todos.forEach(todo => {
+    const status = validateStatus(todo.status);
+    todosByStatus[status].push(todo);
+  });
+
+  // Render order
+  const statusOrder = [STATUSES.TODO, STATUSES.IN_PROGRESS, STATUSES.REVIEW, STATUSES.DONE];
 
   return (
     <div className="todo-list">
-      {pendingTodos.length > 0 && (
-        <section className="todo-section">
-          <h2>To Do ({pendingTodos.length})</h2>
-          {pendingTodos.map(todo => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={onToggle}
-              onDelete={onDelete}
-              onPriorityChange={onPriorityChange}
-            />
-          ))}
-        </section>
-      )}
 
-      {doneTodos.length > 0 && (
-        <section className="todo-section">
-          <h2>Done ({doneTodos.length})</h2>
-          {doneTodos.map(todo => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={onToggle}
-              onDelete={onDelete}
-              onPriorityChange={onPriorityChange}
-            />
-          ))}
-        </section>
-      )}
+      {statusOrder.map(status => {
+        const statusTodos = todosByStatus[status];
+        if (statusTodos.length === 0) return null;
+
+        const config = STATUS_CONFIG[status];
+
+        return (
+          <section key={status} className="todo-section">
+            <h2>{config.label} ({statusTodos.length})</h2>
+            {statusTodos.map(todo => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onStatusChange={onStatusChange}
+                onDelete={onDelete}
+                onPriorityChange={onPriorityChange}
+              />
+            ))}
+          </section>
+        );
+      })}
     </div>
   );
 }

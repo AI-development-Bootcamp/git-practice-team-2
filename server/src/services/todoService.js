@@ -1,10 +1,12 @@
 import { readFileSync, writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { taskStatusOptions as statuses } from '../constants/status.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const DATA_FILE = join(__dirname, "../data/todos.json");
+
 function readTodos() {
   try {
     const data = readFileSync(DATA_FILE, "utf-8");
@@ -13,7 +15,21 @@ function readTodos() {
     return [];
   }
 }
-//check
+
+function validateStatus(status) {
+  if (!status) return 'todo'; // Default
+
+  const normalizedStatus = status.toLowerCase();
+
+  if (statuses.includes(normalizedStatus)) {
+    return normalizedStatus;
+  }
+
+  const error = new Error(`Invalid status: ${status}. Allowed values: ${statuses.join(', ')}`);
+  error.statusCode = 400;
+  throw error;
+}
+
 function writeTodos(todos) {
   writeFileSync(DATA_FILE, JSON.stringify(todos, null, 2));
 }
@@ -30,10 +46,12 @@ export const todoService = {
 
   create(todoData) {
     const todos = readTodos();
+    const status = validateStatus(todoData.status);
+
     const newTodo = {
       id: crypto.randomUUID(),
       title: todoData.title,
-      status: 'todo',
+      status: status,
       priority: todoData.priority || 'medium',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -48,9 +66,15 @@ export const todoService = {
     const index = todos.findIndex((todo) => todo.id === id);
     if (index === -1) return null;
 
+    let updatedStatus = todos[index].status;
+    if (updates.status !== undefined) {
+      updatedStatus = validateStatus(updates.status);
+    }
+
     todos[index] = {
       ...todos[index],
-      ...updates, // Supported fields: title, status, priority
+      ...updates,
+      status: updatedStatus,
       updatedAt: new Date().toISOString()
     };
     writeTodos(todos);
