@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { readFileSync, writeFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import { taskStatusOptions as statuses } from '../constants/status.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +52,7 @@ export const todoService = {
       id: crypto.randomUUID(),
       title: todoData.title,
       status: status,
+      priority: todoData.priority || 'medium',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
