@@ -4,6 +4,7 @@ import TodoList from './TodoList';
 import AddTodo from './AddTodo';
 import Navigation from './Navigation';
 import StatisticsPage from './StatisticsPage';
+import AddTodoModal from './AddTodoModal';
 import '../App.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState('tasks');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     loadTodos();
@@ -29,9 +31,9 @@ function App() {
     }
   };
 
-  const handleAdd = async (title) => {
+  const handleAdd = async (todoData) => {
     try {
-      const newTodo = await api.todos.create(title);
+      const newTodo = await api.todos.create(todoData);
       setTodos([...todos, newTodo]);
     } catch (err) {
       setError(err.message);
@@ -62,6 +64,15 @@ function App() {
     setCurrentPage(page);
   };
 
+  const handlePriorityChange = async (id, priority) => {
+    try {
+      const updated = await api.todos.update(id, { priority });
+      setTodos(todos.map(t => t.id === id ? updated : t));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="app">
       <header className="header">
@@ -75,6 +86,19 @@ function App() {
           {currentPage === 'tasks' ? (
             <>
               <AddTodo onAdd={handleAdd} />
+      <main className="main">
+        <button
+          className="add-todo-btn"
+          onClick={() => setIsModalOpen(true)}
+        >
+          + Add New Task
+        </button>
+
+        <AddTodoModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onAdd={handleAdd}
+        />
 
               {error && (
                 <div className="error-message">
@@ -98,6 +122,17 @@ function App() {
           )}
         </main>
       </div>
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <TodoList
+            todos={todos}
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+            onPriorityChange={handlePriorityChange}
+          />
+        )}
+      </main>
     </div>
   );
 }

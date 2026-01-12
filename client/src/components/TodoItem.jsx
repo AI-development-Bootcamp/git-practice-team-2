@@ -1,8 +1,12 @@
 import React from 'react';
+import PriorityBadge from './PriorityBadge';
 
-function TodoItem({ todo, onToggle, onDelete }) {
+function TodoItem({ todo, onToggle, onDelete, onPriorityChange }) {
   return (
-    <div className={`todo-item ${todo.status === 'done' ? 'done' : ''}`}>
+    <div
+      className={`todo-item ${todo.status === 'done' ? 'done' : ''}`}
+      data-priority={todo.priority || 'medium'}
+    >
       <button
         className="toggle-btn"
         onClick={() => onToggle(todo.id)}
@@ -10,6 +14,11 @@ function TodoItem({ todo, onToggle, onDelete }) {
       >
         {todo.status === 'done' ? '✓' : '○'}
       </button>
+
+      <PriorityBadge
+        priority={todo.priority || 'medium'}
+        onChange={(newPriority) => onPriorityChange(todo.id, newPriority)}
+      />
 
       <span className="todo-title">{todo.title}</span>
 

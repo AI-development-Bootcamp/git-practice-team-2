@@ -21,17 +21,24 @@ export default async function todosRoutes(fastify, options) {
   });
 
   // POST /api/todos - Create new todo
-  fastify.post("/", async (request, reply) => {
-    const { title } = request.body;
+  fastify.post('/', async (request, reply) => {
+    const { title, priority } = request.body;
     if (!title || !title.trim()) {
       return reply.status(400).send({ error: "Title is required" });
     }
-    const todo = todoService.create({ title: title.trim() });
+    if (priority && !['low', 'medium', 'high'].includes(priority)) {
+      return reply.status(400).send({ error: 'Invalid priority' });
+    }
+    const todo = todoService.create({ title: title.trim(), priority });
     return reply.status(201).send(todo);
   });
 
   // PUT /api/todos/:id - Update todo
-  fastify.put("/:id", async (request, reply) => {
+  fastify.put('/:id', async (request, reply) => {
+    const { priority } = request.body;
+    if (priority && !['low', 'medium', 'high'].includes(priority)) {
+      return reply.status(400).send({ error: 'Invalid priority' });
+    }
     const todo = todoService.update(request.params.id, request.body);
     if (!todo) {
       return reply.status(404).send({ error: "Todo not found" });
